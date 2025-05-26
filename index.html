@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vizualizacija Pontifikata Kroz Povijest</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Pontifikati Kroz Povijest</h1>
+    </header>
+
+    <div class="container">
+        <section id="controls">
+            <h2>Kontrole</h2>
+            <div class="control-group">
+                <label for="sort-order">Sortiraj Pape po:</label>
+                <select id="sort-order">
+                    <option value="chronological">Kronološki</option>
+                    <option value="duration">Trajanju Pontifikata</option>
+                    <option value="alphabetical">Abecedi (Ime)</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="nationality-filter">Filtriraj po Nacionalnosti:</label>
+                <select id="nationality-filter">
+                    <option value="all">Sve Nacionalnosti</option>
+                  <!-- Options will be populated by D3 --> 
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="century-filter">Filtriraj po Stoljeću:</label>
+                <select id="century-filter">
+                    <option value="all">Sva Stoljeća</option>
+               <!-- Options will be populated by D3 --> 
+                </select>
+            </div>
+             <div class="control-group">
+                <button id="animate-timeline-button">Pokreni/Zaustavi Animaciju Vremenske Crte</button>
+            </div>
+        </section>
+
+
+        <div id="content">
+        <section id="timeline-section">
+            <h2>1. Vremenska Crta Pontifikata</h2>
+            <div id="timeline-chart"></div>
+            <div id="tooltip" class="tooltip" style="opacity:0;"></div>
+        </section>
+
+        <section id="map-section">
+            <h2>2. Karta Svijeta po Nacionalnosti Papa</h2>
+            <div id="map-chart"></div>
+           <!-- Tooltip for map --> 
+            <div id="map-tooltip" class="tooltip" style="opacity:0;"></div>
+        </section>
+
+        <section id="frequency-section">
+            <h2>3. Graf Učestalosti Papa po Stoljećima</h2>
+            <div id="frequency-chart"></div>
+        </section>
+
+        <section id="duration-comparison-section">
+            <h2>4. Usporedba Papa po Trajanju Pontifikata</h2>
+            <div id="duration-chart"></div>
+        </section>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Projekt iz kolegija Vizualizacija Podataka</p>
+    </footer>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/topojson.v3.min.js"></script>  <!-- For map data --> 
+    <script src="main.js"></script>
+</body>
+</html>
