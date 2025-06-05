@@ -1,81 +1,114 @@
 <!DOCTYPE html>
 <html lang="hr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vizualizacija Pontifikata Kroz Povijest</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header>
-        <h1>Pontifikati Kroz Povijest</h1>
+      <h1>Pontifikati Kroz Povijest</h1>
     </header>
 
-    <div class="container">
+    <div class="main-layout">
+      <aside id="sidebar">
+        <section id="section-selector">
+          <h3>Odaberi Vizualizaciju</h3>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="section" value="timeline" checked />
+              <span>Racing Chart</span>
+            </label>
+            <label>
+              <input type="radio" name="section" value="map" />
+              <span>Karta Svijeta</span>
+            </label>
+            <label>
+              <input type="radio" name="section" value="duration-comparison" />
+              <span>Trajanje Pontifikata</span>
+            </label>
+            <label>
+              <input type="radio" name="section" value="saints" />
+              <span>Analiza Svetaca</span>
+            </label>
+          </div>
+        </section>
         <section id="controls">
-            <h2>Kontrole</h2>
-            <div class="control-group">
-                <label for="sort-order">Sortiraj Pape po:</label>
-                <select id="sort-order">
-                    <option value="chronological">Kronološki</option>
-                    <option value="duration">Trajanju Pontifikata</option>
-                    <option value="alphabetical">Abecedi (Ime)</option>
-                </select>
-            </div>
-            <div class="control-group">
-                <label for="nationality-filter">Filtriraj po Nacionalnosti:</label>
-                <select id="nationality-filter">
-                    <option value="all">Sve Nacionalnosti</option>
-                  <!-- Options will be populated by D3 --> 
-                </select>
-            </div>
-            <div class="control-group">
-                <label for="century-filter">Filtriraj po Stoljeću:</label>
-                <select id="century-filter">
-                    <option value="all">Sva Stoljeća</option>
-               <!-- Options will be populated by D3 --> 
-                </select>
-            </div>
-             <div class="control-group">
-                <button id="animate-timeline-button">Pokreni/Zaustavi Animaciju Vremenske Crte</button>
-            </div>
+          <h3>Kontrole</h3>
+          <div class="control-group" id="sort-order-group">
+            <label for="sort-order">Sortiraj po:</label>
+            <select id="sort-order">
+              <option value="chronological">Kronološki</option>
+              <option value="duration">Trajanju</option>
+              <option value="alphabetical">Abecedi</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="nationality-filter">Nacionalnost:</label>
+            <select id="nationality-filter">
+              <option value="all">Sve</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="century-filter">Stoljeće:</label>
+            <select id="century-filter">
+              <option value="all">Sva</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="canonization-filter">Status svetosti:</label>
+            <select id="canonization-filter">
+              <option value="all">Svi</option>
+              <option value="Saint">Samo svetci</option>
+              <option value="non-Saint">Samo ne-svetci</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <button id="animate-timeline-button">Animacija</button>
+          </div>
+          <div class="control-group" id="speed-control-group">
+            <label for="animation-speed">Brzina animacije:</label>
+            <input
+              type="range"
+              id="animation-speed"
+              min="50"
+              max="500"
+              value="150"
+              step="50"
+            />
+            <span id="speed-display">150ms</span>
+          </div>
+        </section>
+      </aside>
+
+      <main id="content">
+        <section id="timeline-section" class="visualization-section active">
+          <div id="timeline-chart"></div>
+          <div id="tooltip" class="tooltip" style="opacity: 0"></div>
+        </section>
+        <section id="map-section" class="visualization-section">
+          <div id="map-chart"></div>
+          <div id="map-tooltip" class="tooltip" style="opacity: 0"></div>
         </section>
 
-
-        <div id="content">
-        <section id="timeline-section">
-            <h2>1. Vremenska Crta Pontifikata</h2>
-            <div id="timeline-chart"></div>
-            <div id="tooltip" class="tooltip" style="opacity:0;"></div>
+        <section id="duration-comparison-section" class="visualization-section">
+          <div id="duration-chart"></div>
         </section>
 
-        <section id="map-section">
-            <h2>2. Karta Svijeta po Nacionalnosti Papa</h2>
-            <div id="map-chart"></div>
-           <!-- Tooltip for map --> 
-            <div id="map-tooltip" class="tooltip" style="opacity:0;"></div>
+        <section id="saints-section" class="visualization-section">
+          <div id="saints-overview"></div>
+          <div id="saints-chart"></div>
         </section>
-
-        <section id="frequency-section">
-            <h2>3. Graf Učestalosti Papa po Stoljećima</h2>
-            <div id="frequency-chart"></div>
-        </section>
-
-        <section id="duration-comparison-section">
-            <h2>4. Usporedba Papa po Trajanju Pontifikata</h2>
-            <div id="duration-chart"></div>
-        </section>
-
-        </div>
-
+      </main>
     </div>
 
     <footer>
-        <p>Projekt iz kolegija Vizualizacija Podataka</p>
+      <p>Projekt iz kolegija Vizualizacija Podataka. Autor: Karlo Kraml</p>
     </footer>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://d3js.org/topojson.v3.min.js"></script>  <!-- For map data --> 
+    <script src="https://d3js.org/topojson.v3.min.js"></script>
     <script src="main.js"></script>
-</body>
+  </body>
 </html>

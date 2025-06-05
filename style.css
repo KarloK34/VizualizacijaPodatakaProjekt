@@ -1,118 +1,511 @@
 body {
-    font-family: sans-serif;
-    margin: 0;
-    background-color: #f4f4f4;
-    color: #333;
+  font-family: sans-serif;
+  margin: 0;
+  background-color: #f4f4f4;
+  color: #333;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
-    background-color: #333;
-    color: #fff;
-    padding: 1em 0;
-    text-align: center;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.main-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+#sidebar {
+  width: 240px;
+  background-color: #fff;
+  border-right: 2px solid #ddd;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+#sidebar h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 1.1em;
+  border-bottom: 2px solid #5cb85c;
+  padding-bottom: 5px;
+}
+
+#section-selector {
+  margin-bottom: 15px;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.radio-group label:hover {
+  background-color: #f0f0f0;
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 10px;
+}
+
+.radio-group input[type="radio"]:checked + span {
+  font-weight: bold;
+  color: #5cb85c;
+}
+
+.radio-group label[style*="display: none"] {
+  display: none !important;
+}
+
+#content {
+  flex: 1;
+  padding: 20px;
+  overflow: auto;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.visualization-section {
+  display: none;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.visualization-section.active {
+  display: flex;
+  flex-direction: column;
+}
+
+.visualization-section h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.5em;
 }
 
 .container {
-    width: 96%;
-    margin: auto;
-    overflow: hidden;
-    padding: 20px;
+  width: 96%;
+  margin: auto;
+  overflow: hidden;
+  padding: 20px;
 }
 
 section {
-    background-color: #fff;
-    margin-bottom: 20px;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  background-color: #fff;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #controls {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap; 
-    margin-bottom: 20px;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 0;
 }
 
 @media (max-width: 768px) {
-    #controls {
-        flex-direction: column; 
-        align-items: stretch;
-    }
+  .main-layout {
+    flex-direction: column;
+  }
 
+  #sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 2px solid #ddd;
+  }
+
+  .radio-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .radio-group label {
+    padding: 5px 8px;
+    font-size: 0.9em;
+  }
 }
 
 .control-group {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .control-group label {
-    display: block;
-    margin-bottom: 5px;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9em;
+  font-weight: 500;
 }
 
 .control-group select,
 .control-group button {
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    width: 100%;
-    box-sizing: border-box;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 0.9em;
 }
 
 .control-group button {
-    background-color: #5cb85c;
-    color: white;
-    cursor: pointer;
-    margin-top: 20px;
+  background-color: #5cb85c;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 0.85em;
 }
 
 .control-group button:hover {
-    background-color: #4cae4c;
+  background-color: #4cae4c;
 }
 
-#duration-chart { 
-    overflow-x: auto;
-    width: 100%; 
+.control-group input[type="range"] {
+  width: 100%;
+  margin: 5px 0;
+  padding: 0;
+  height: 6px;
+  background: #ddd;
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
-.tooltip {
-    position: absolute;
-    text-align: center;
-    padding: 8px;
-    font: 12px sans-serif;
-    background: lightsteelblue;
-    border: 0px;
-    border-radius: 8px;
-    pointer-events: none;
+.control-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #5cb85c;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.control-group input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #5cb85c;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+#speed-display {
+  font-size: 0.8em;
+  color: #666;
+  display: block;
+  text-align: center;
+  margin-top: 2px;
+}
+
+#speed-control-group {
+  margin-top: 10px;
 }
 
 #timeline-chart {
-    width: 100%;
-    /* height: 600px; */ /* Remove fixed height or adjust as needed */
-    overflow-x: auto; /* Enable horizontal scrolling */
-    overflow-y: hidden; /* Prevent vertical scrolling on the container if SVG handles its own height */
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
+  width: 100%;
+  flex: 1;
+  min-height: 500px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
 }
 
-/* #timeline-chart svg can be styled here if needed, 
-   but width and height are primarily controlled by JS for dynamic content */
-
-#map-chart svg,
-#frequency-chart svg { 
-    width: 100%;
-    height: auto;
+#map-chart {
+  width: 100%;
+  flex: 1;
+  min-height: 500px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
 }
 
-#duration-chart svg { 
-    display: block; 
+#duration-chart {
+  width: 100%;
+  flex: 1;
+  min-height: 500px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+#map-chart svg {
+  width: 100%;
+  height: 100%;
+}
+
+#duration-chart svg {
+  height: 100%;
+}
+
+#saints-chart {
+  width: 100%;
+  flex: 1;
+  min-height: 400px;
+  max-height: 70vh; 
+  overflow: visible; 
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+#saints-chart svg {
+  width: 100%;
+  height: auto; 
+  max-height: 100%;
+}
+
+#saints-overview {
+  background-color: #f8f9fa;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+}
+
+.saints-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.stat-card {
+  background: white;
+  padding: 8px 10px;
+  border-radius: 4px;
+  align-content: center;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border-left: 3px solid #5cb85c;
+}
+
+.stat-card h3 {
+  margin: 0 0 4px 0;
+  font-size: 1em;
+  color: black;
+  font-weight: 500;
+}
+
+.stat-number {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #5cb85c;
+  display: block;
+}
+
+.stat-percentage {
+  font-size: 0.7em;
+  color: #888;
+  margin-top: 2px;
+}
+
+.stat-label {
+  color: #666;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+.saints-legend {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Reduced from 20px */
+  flex-wrap: wrap;
+  margin-top: 10px; /* Reduced from 15px */
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Reduced from 8px */
+}
+
+.legend-color {
+  width: 16px; /* Reduced from 20px */
+  height: 16px; /* Reduced from 20px */
+  border-radius: 50%;
+  border: 1px solid #333; /* Reduced from 2px */
+}
+
+.saint-indicator {
+  font-size: 1.2em;
+  color: gold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.tooltip {
+  position: absolute;
+  text-align: center;
+  padding: 8px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.racing-chart .bar {
+  transition: all 0.3s ease-in-out;
+}
+
+.racing-chart .name-label,
+.racing-chart .duration-label,
+.racing-chart .rank-label {
+  transition: all 0.3s ease-in-out;
+}
+
+.animation-date {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.animation-progress {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 3px;
+  border-radius: 3px;
+}
+
+#animate-timeline-button {
+  background: linear-gradient(135deg, #5cb85c, #449d44);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#animate-timeline-button:hover {
+  background: linear-gradient(135deg, #449d44, #398439);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+#animate-timeline-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#animate-timeline-button:disabled {
+  background: linear-gradient(135deg, #ccc, #aaa) !important;
+  color: #666 !important;
+  cursor: not-allowed !important;
+  opacity: 0.5 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+#animate-timeline-button:disabled:hover {
+  background: linear-gradient(135deg, #ccc, #aaa) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.racing-chart {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-title {
+  font-family: "Arial", sans-serif;
+  font-weight: bold;
+}
+
+.chart-subtitle {
+  font-family: "Arial", sans-serif;
+  font-style: italic;
+}
+
+.legend-item text {
+  font-size: 10px; /* Reduced from 11px */
+  font-family: "Arial", sans-serif;
+}
+
+@media (max-width: 1200px) {
+  .racing-chart .name-label {
+    font-size: 10px !important;
+  }
+
+  .racing-chart .duration-label,
+  .racing-chart .rank-label {
+    font-size: 10px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #saints-chart {
+    min-height: 350px;
+    max-height: 80vh;
+  }
+
+  .saints-stats {
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 6px;
+  }
+
+  .stat-card {
+    padding: 6px 8px;
+  }
+
+  .stat-card h3 {
+    font-size: 0.7em;
+  }
+
+  .stat-number {
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  #saints-chart {
+    min-height: 300px;
+  }
+
+  .stat-number {
+    font-size: 0.9em;
+  }
+
+  .stat-card h3 {
+    font-size: 0.65em;
+  }
 }
 
 footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #333;
-    color: #fff;
-    margin-top: 30px;
+  text-align: center;
+  background-color: #333;
+  color: #fff;
+  flex-shrink: 0;
 }
